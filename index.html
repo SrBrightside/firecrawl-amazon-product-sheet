@@ -13,13 +13,12 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#d8d8d8;color:var(--ink);font:14px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;min-height:100%}
 .phone{max-width:430px;margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 0 1px #ccc}
-.top{background:linear-gradient(#ead19a,#e0bf78);padding:10px 10px 0}
+.top{background:linear-gradient(#ead19a,#e0bf78);padding:10px 10px 12px}
 .nav{display:flex;align-items:center;gap:8px}
 .iconbtn{width:36px;height:36px;border:0;background:transparent;font-size:20px;cursor:pointer;color:#111;flex-shrink:0}
 form{flex:1;display:flex;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.12)}
-form input{flex:1;border:0;padding:10px 8px 10px 4px;font:15px/1.2 inherit;min-width:0;outline:none}
+form input{flex:1;border:0;padding:10px 8px 10px 4px;font:16px/1.2 -apple-system,BlinkMacSystemFont,sans-serif;min-width:0;outline:none;transform:none}
 .lens{padding:0 0 0 12px;opacity:.55;font-size:16px;line-height:36px}
-.ship{display:flex;align-items:center;gap:6px;padding:8px 6px 10px;font-size:13px;color:#111}
 .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;background:#fff;border-bottom:1px solid var(--line);scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex-shrink:0;border:1px solid #888c8c;background:#fff;border-radius:20px;padding:7px 12px;font-size:13px;white-space:nowrap}
@@ -48,6 +47,16 @@ form input{flex:1;border:0;padding:10px 8px 10px 4px;font:15px/1.2 inherit;min-w
 .cart{display:block;margin-top:8px;background:var(--cta);border:0;border-radius:20px;padding:10px 12px;font:600 14px inherit;text-align:center;color:#111;text-decoration:none}
 .cart:active{background:var(--cta2)}
 .note{font-size:11px;color:var(--mute);padding:10px 14px 24px;background:var(--bg)}
+.sk{pointer-events:none}
+.sk .bone{background:linear-gradient(90deg,#eee 25%,#f6f6f6 37%,#eee 63%);background-size:400% 100%;animation:shimmer 1.1s ease infinite;border-radius:6px}
+.sk .media .bone{width:128px;height:148px}
+.sk .t1{height:14px;width:92%;margin-bottom:8px}
+.sk .t2{height:12px;width:70%;margin-bottom:8px}
+.sk .t3{height:12px;width:45%;margin-bottom:10px}
+.sk .t4{height:22px;width:38%;margin-bottom:10px}
+.sk .t5{height:36px;width:100%;border-radius:20px}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:0 0}}
+
 @media (min-width:720px){
   body{padding:24px 0}
   .phone{min-height:auto;border-radius:12px;overflow:hidden}
@@ -61,11 +70,10 @@ form input{flex:1;border:0;padding:10px 8px 10px 4px;font:15px/1.2 inherit;min-w
       <button class="iconbtn" type="button" aria-label="Atrás">‹</button>
       <form id="f">
         <span class="lens">⌕</span>
-        <input id="q" value="play 5" placeholder="Buscar" autocomplete="off"/>
+        <input id="q" value="play 5" placeholder="Buscar" autocomplete="off" enterkeyhint="search" inputmode="search"/>
       </form>
       <button class="iconbtn" type="button" aria-label="Compartir">↗</button>
     </div>
-    <div class="ship">📍 Enviar a <b id="ship">ONBM · Miami 33166</b> ▾</div>
   </header>
   <div class="chips">
     <span class="chip">☰</span>
@@ -496,9 +504,15 @@ function card(it){
     </div>
   </article>`
 }
+function skeleton(){
+  const bone = `<article class="card sk" aria-hidden="true">
+    <div class="media"><div class="bone"></div></div>
+    <div class="info"><div class="bone t1"></div><div class="bone t2"></div><div class="bone t3"></div><div class="bone t4"></div><div class="bone t5"></div></div>
+  </article>`
+  $("#list").innerHTML = bone.repeat(5)
+}
 function render(data, extra){
   const results=data.results||[]
-  if(data.shipTo) $("#ship").textContent=data.shipTo
   $("#list").innerHTML=results.map(card).join("")
   $("#status").textContent = extra || (`${results.length} resultados de “${data.query||"Play 5"}” · scrape Firecrawl, sin key en esta página.`)
 }
@@ -510,6 +524,7 @@ $("#f").addEventListener("submit", async ev=>{
   const q=$("#q").value.trim()
   if(!q) return
   $("#status").textContent="Buscando “"+q+"”…"
+  skeleton()
   try{
     const r=await fetch("/api/search?q="+encodeURIComponent(q),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({q})})
     const data=await r.json().catch(()=>({}))
@@ -517,7 +532,7 @@ $("#f").addEventListener("submit", async ev=>{
     if(!data.results || !data.results.length) throw new Error("sin resultados")
     render(data, "Búsqueda en vivo · “"+q+"” · "+data.results.length+" resultados")
   }catch(e){
-    $("#status").textContent="No se pudo buscar “"+q+"”: "+(e.message||e)
+    render(loadSeed(), "No se pudo buscar “"+q+"”: "+(e.message||e))
   }
 })
 render(loadSeed())
