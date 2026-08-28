@@ -509,13 +509,15 @@ $("#f").addEventListener("submit", async ev=>{
   ev.preventDefault()
   const q=$("#q").value.trim()
   if(!q) return
-  $("#status").textContent="Buscando…"
+  $("#status").textContent="Buscando “"+q+"”…"
   try{
-    const r=await fetch("/api/search",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({q})})
-    if(!r.ok) throw new Error("offline")
-    render(await r.json(), "Búsqueda en vivo · “"+q+"”")
+    const r=await fetch("/api/search?q="+encodeURIComponent(q),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({q})})
+    const data=await r.json().catch(()=>({}))
+    if(!r.ok || data.error) throw new Error(data.error || ("HTTP "+r.status))
+    if(!data.results || !data.results.length) throw new Error("sin resultados")
+    render(data, "Búsqueda en vivo · “"+q+"” · "+data.results.length+" resultados")
   }catch(e){
-    render(loadSeed(), "El buscador en vivo no está en Pages (la key no va al HTML). Lista precargada de Play 5.")
+    $("#status").textContent="No se pudo buscar “"+q+"”: "+(e.message||e)
   }
 })
 render(loadSeed())

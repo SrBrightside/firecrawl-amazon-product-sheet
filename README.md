@@ -27,16 +27,18 @@ python3 serve.py
 # http://127.0.0.1:8765
 ```
 
-## Live search (clone)
+## Live search
 
-Live search talks to Firecrawl from **your machine**. The key stays in the CLI store, never in the HTML.
+The search box posts to `/api/search`. That route lives on a host with server-side functions (Vercel). It scrapes `amazon.com/s?k=…` with Firecrawl. The API key is a server env var, never in the HTML.
+
+GitHub Pages can still show the preloaded Play 5 list, but it cannot search live.
+
+Locally:
 
 ```bash
 npx -y firecrawl-cli@latest login --browser
 python3 serve.py
 ```
-
-Then submit a query in the page.
 
 ## Limits
 
