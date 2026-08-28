@@ -372,7 +372,7 @@ def live_search(q):
     return data, 200
 
 
-class Handler(SimpleHTTPRequestHandler):
+class LocalHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(ROOT), **kwargs)
 
@@ -432,7 +432,7 @@ class Handler(SimpleHTTPRequestHandler):
 def main():
     os.chdir(ROOT)
     ThreadingHTTPServer.allow_reuse_address = True
-    httpd = ThreadingHTTPServer((HOST, PORT), Handler)
+    httpd = ThreadingHTTPServer((HOST, PORT), LocalHandler)
     print(f"http://{HOST}:{PORT}", flush=True)
     httpd.serve_forever()
 

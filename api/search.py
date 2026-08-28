@@ -8,9 +8,18 @@ from http.server import BaseHTTPRequestHandler
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 from _parse import parse_serp, scrape_markdown  # noqa: E402
+
+MIME = {
+    ".html": "text/html; charset=utf-8",
+    ".json": "application/json; charset=utf-8",
+    ".txt": "text/plain; charset=utf-8",
+    ".md": "text/plain; charset=utf-8",
+    ".ico": "image/x-icon",
+}
 
 FC_URL = "https://api.firecrawl.dev/v1/scrape"
 TIMEOUT = 45
@@ -101,9 +110,34 @@ class handler(BaseHTTPRequestHandler):
         self.cors()
         self.end_headers()
 
+    def send_static(self, rel):
+        target = (ROOT / rel).resolve()
+        if not str(target).startswith(str(ROOT.resolve())) or not target.is_file():
+            self.send_json({"error": "not found"}, 404)
+            return
+        data = target.read_bytes()
+        ctype = MIME.get(target.suffix.lower(), "application/octet-stream")
+        self.send_response(200)
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(data)))
+        self.cors()
+        self.end_headers()
+        self.wfile.write(data)
+
     def do_GET(self):
-        payload, status = search(read_q(self))
-        self.send_json(payload, status)
+        path = urllib.parse.urlparse(self.path).path
+        if path.startswith("/api/search"):
+            payload, status = search(read_q(self))
+            self.send_json(payload, status)
+            return
+        if path in ("/", "/index.html"):
+            self.send_static("index.html")
+            return
+        rel = path.lstrip("/")
+        if rel in ("results.json", "product.json", "README.md"):
+            self.send_static(rel)
+            return
+        self.send_json({"error": "not found"}, 404)
 
     def do_POST(self):
         payload, status = search(read_q(self))
