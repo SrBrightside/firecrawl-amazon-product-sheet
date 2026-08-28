@@ -1,0 +1,118 @@
+{
+  "query": "Play 5",
+  "sourceUrl": "https://www.amazon.com/PlayStation%C2%AE5-console-1TB-PlayStation-5/dp/B0FRGTYSL5",
+  "asin": "B0FRGTYSL5",
+  "title": "PlayStation®5 console – 1TB",
+  "brand": "PlayStation",
+  "platform": "PlayStation 5",
+  "rating": 4.7,
+  "reviewCount": 1620,
+  "amazonsChoice": true,
+  "boughtPastMonth": "4K+",
+  "availability": "In Stock",
+  "shipsFrom": "Amazon.com",
+  "eta": "FREE delivery Wednesday, September 2",
+  "price": {
+    "mapHidden": true,
+    "visible": null,
+    "cartHint": "See price in cart",
+    "newCondition": 649.0,
+    "currency": "USD"
+  },
+  "images": [
+    {
+      "url": "https://m.media-amazon.com/images/I/51tSjJJl82L._SX342_.jpg",
+      "role": "hero"
+    },
+    {
+      "url": "https://m.media-amazon.com/images/I/21d6MWY1LCL._SX38_SY50_CR,0,0,38,50_.jpg",
+      "role": "thumb"
+    },
+    {
+      "url": "https://m.media-amazon.com/images/I/21CyngpxoML._SX38_SY50_CR,0,0,38,50_.jpg",
+      "role": "thumb"
+    },
+    {
+      "url": "https://m.media-amazon.com/images/I/31nMMbUi2+L._SX38_SY50_CR,0,0,38,50_.jpg",
+      "role": "thumb"
+    },
+    {
+      "url": "https://m.media-amazon.com/images/I/41Gr-cDOI5L._SX38_SY50_CR,0,0,38,50_.jpg",
+      "role": "thumb"
+    },
+    {
+      "url": "https://m.media-amazon.com/images/I/51mCBz1F4-L._SX38_SY50_CR,0,0,38,50_.jpg",
+      "role": "thumb"
+    },
+    {
+      "url": "https://m.media-amazon.com/images/I/51LsyYaKGlL._SX38_SY50_CR,0,0,38,50_.jpg",
+      "role": "thumb"
+    },
+    {
+      "url": "https://m.media-amazon.com/images/I/51Rn4HSa6BL._SX38_SY50_CR,0,0,38,50_.jpg",
+      "role": "thumb"
+    }
+  ],
+  "bullets": [
+    "From Jan. 2028, newly released games on PlayStation will be available for purchase on PlayStation Store and at retailers in digital format only. Discs for games released before Jan. 2028 can continue to be played on this console.",
+    "PlayStation 5 Console - 1TB, includes wireless controller, 1TBSSD, Disc Drive, 2 Horizontal Stand Feet, HDMI cable, AC power cord, USB cable, printed materials, Astro's Playroom (pre-installed game)",
+    "1TB of Storage, keep your favorite games ready and waiting for you to jump in and play",
+    "Ultra-High Speed SSD, maximize you play sessions with near instant load times for installed PS5 games",
+    "Integrated I/O, the custom integration of the PS5 console's systems lets creators pull datat from the SSD so quickly that they can design games in ways never before possible",
+    "Ray Tracing, immerse yourself in owrlds with a new level of realism as rays of light are individually simulated, creating true-to-life shadows and reflections in supported PS5 games"
+  ],
+  "alsoViewed": [
+    {
+      "title": "PS5 - Sony PlayStation 5 Digital Edition Gaming Console + Wireless Controller - 16GB GDDR6 RAM, 825GB SSD, 120Hz 8K Output, White",
+      "asin": "B0966NLTZS",
+      "url": "https://www.amazon.com/PS5-Playstation-Digital-Wireless-Controller/dp/B0966NLTZS",
+      "image": "https://m.media-amazon.com/images/I/616X8zng9wS._AC_SS115_.jpg",
+      "price": 667.75
+    },
+    {
+      "title": "Sony Playstation 5 Disc Version PS5 Console - 4K-TV Gaming, 120Hz 8K Output, 16GB GDDR6, 825GB SSD, WiFi 6, Bluetooth 5.1 (Renewed) White",
+      "asin": "B0BFK8127Y",
+      "url": "https://www.amazon.com/Sony-Playstation-Disc-Version-PS5-Console/dp/B0BFK8127Y",
+      "image": "https://m.media-amazon.com/images/I/31JaiPXYI8L._AC_SS115_.jpg",
+      "price": 603.22
+    }
+  ],
+  "searchHits": [
+    {
+      "title": "PlayStation®5 console – 1TB",
+      "url": "https://www.amazon.com/PlayStation%C2%AE5-console-1TB-PlayStation-5/dp/B0FRGTYSL5",
+      "asin": "B0FRGTYSL5"
+    },
+    {
+      "title": "PlayStation 5 Console (PS5)",
+      "url": "https://www.amazon.com/PlayStation-5-Console-CFI-1215A01X/dp/B0BCNKKZ91",
+      "asin": "B0BCNKKZ91"
+    },
+    {
+      "title": "PlayStation 5 Disc Edition Console (slim)",
+      "url": "https://www.amazon.com/PlayStation%C2%AE5-console-slim-PlayStation-5/dp/B0CL61F39H",
+      "asin": "B0CL61F39H"
+    }
+  ],
+  "coverage": {
+    "extracted": [
+      "title",
+      "asin",
+      "rating",
+      "bullets",
+      "images",
+      "alsoViewed",
+      "mapHidden",
+      "newConditionPrice",
+      "availability"
+    ],
+    "lost": [
+      "buy-box exact price (MAP)",
+      "weight/dims reliable",
+      "Q&A",
+      "full review bodies",
+      "add-to-cart without Amazon login",
+      "variants"
+    ]
+  }
+}

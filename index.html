@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sondeo · Play 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --obs:#050508;--obs2:#0a0b12;--ind:#3d4fff;--ind2:#7c8cff;--deep:#001a5c;--fog:#d7d2ff;--mute:#8d89a8;--map:#ff6a4a;--go:#3ee0b0;--line:rgba(124,140,255,.28);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--obs);color:var(--fog);font-family:Syne,system-ui,sans-serif;min-height:100%}
+body{overflow-x:hidden;background:
+  radial-gradient(1200px 700px at 80% -10%, rgba(0,55,145,.45), transparent 55%),
+  radial-gradient(900px 500px at -10% 80%, rgba(61,79,255,.18), transparent 50%),
+  linear-gradient(180deg,#050508 0%,#070712 100%)}
+.grain,.beam{position:fixed;inset:0;pointer-events:none;z-index:40}
+.grain{opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.85'/></svg>")}
+.beam{background:linear-gradient(118deg,transparent 38%,rgba(61,79,255,.09) 50%,transparent 62%);mix-blend-mode:screen}
+header{position:relative;z-index:5;display:flex;align-items:center;gap:18px;padding:22px 28px 0}
+.mark{width:42px;height:42px;border:1px solid var(--line);display:grid;place-items:center;font-weight:800;letter-spacing:.08em;font-size:13px;color:var(--ind2);backdrop-filter:blur(10px);background:rgba(8,10,24,.5)}
+.brand-k{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--ind2);opacity:.85}
+form#s{margin-left:auto;display:flex;align-items:center;gap:0;border-bottom:1px solid var(--line);min-width:min(420px,58vw);padding:6px 0}
+form#s input{flex:1;background:none;border:0;color:var(--fog);font:500 15px Syne,sans-serif;outline:none;letter-spacing:.04em}
+form#s input::placeholder{color:var(--mute)}
+form#s button{background:none;border:0;color:var(--ind2);font:800 13px Syne,sans-serif;letter-spacing:.2em;cursor:pointer;padding:8px 4px 8px 16px}
+#status{position:relative;z-index:5;padding:8px 28px 0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);min-height:1.4em}
+body.busy #status{color:var(--ind2)}
+.stage{position:relative;z-index:2;min-height:78vh;padding:8px 28px 40px;display:grid;grid-template-columns:1.15fr .85fr;gap:12px;align-items:end}
+@media (max-width:980px){.stage{grid-template-columns:1fr;padding-top:80px}form#s{min-width:0;width:100%;margin-left:0}header{flex-wrap:wrap}}
+.giant{position:absolute;left:10px;top:4vh;z-index:0;pointer-events:none;line-height:.78;font-weight:800;letter-spacing:-.07em;font-size:clamp(72px,16vw,220px);color:transparent;-webkit-text-stroke:1px rgba(124,140,255,.22);text-transform:uppercase;user-select:none}
+.giant b{display:block;font-style:normal}
+.giant em{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400;-webkit-text-stroke:0;color:rgba(61,79,255,.28);font-size:.55em;letter-spacing:.02em}
+.shot{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;min-height:520px}
+.shot img{max-width:min(520px,90%);max-height:560px;object-fit:contain;filter:drop-shadow(0 40px 80px rgba(61,79,255,.35)) drop-shadow(0 10px 40px #000);transform:rotate(-11deg) scale(1.05);animation:float 7s ease-in-out infinite}
+@keyframes float{50%{transform:rotate(-8deg) translateY(-12px) scale(1.05)}}
+.sheet{position:relative;z-index:3;padding:0 8px 12px;max-width:640px}
+.kicker{font-size:11px;letter-spacing:.38em;text-transform:uppercase;color:var(--ind2);margin-bottom:10px}
+h1{font-size:clamp(28px,4.4vw,52px);line-height:.95;font-weight:800;letter-spacing:-.04em;max-width:16ch;margin-bottom:16px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{font-family:"JetBrains Mono",monospace;font-size:11px;padding:6px 10px;border:1px solid var(--line);color:var(--fog);background:rgba(8,10,22,.45);backdrop-filter:blur(8px)}
+.chip.ok{color:var(--go);border-color:rgba(62,224,176,.35)}
+.price{display:flex;align-items:flex-end;gap:22px;margin:8px 0 22px}
+.stamp{font-weight:800;font-size:72px;line-height:.8;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:2px var(--map);position:relative}
+.stamp:after{content:"";position:absolute;left:-6%;right:-6%;top:48%;height:3px;background:var(--map);transform:rotate(-12deg)}
+.price .hint{font-family:"Instrument Serif",serif;font-style:italic;font-size:28px;color:var(--fog)}
+.price .sub{display:block;font-family:Syne,sans-serif;font-style:normal;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:6px}
+.price.visible .num{font-size:72px;font-weight:800;letter-spacing:-.05em}
+.cart-note{font-size:12px;color:var(--map);letter-spacing:.08em;text-transform:uppercase;margin-top:-12px;margin-bottom:18px}
+.bullets{list-style:none;display:flex;flex-direction:column;gap:10px;max-width:52ch}
+.bullets li{font-size:14px;line-height:1.4;color:#c9c4e6;padding-left:16px;position:relative}
+.bullets li:before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;background:var(--ind)}
+.glass{position:relative;z-index:4;align-self:start;margin-top:12vh;background:rgba(8,10,24,.52);border:1px solid var(--line);backdrop-filter:blur(22px) saturate(1.5);padding:20px 20px 18px;box-shadow:0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06)}
+.glass h2{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--ind2);margin-bottom:8px}
+.glass .score{font-size:42px;font-weight:800;letter-spacing:-.05em;line-height:1}
+.glass .score span{font-size:18px;color:var(--mute);font-weight:500}
+.bar{height:8px;background:#16182a;margin:12px 0 16px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--go),var(--ind2));width:0;transition:width .6s ease}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cols h3{font-size:10px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px;color:var(--mute)}
+.pill{display:block;font-size:11px;padding:5px 8px;margin:0 0 5px;border:1px solid var(--line);font-family:"JetBrains Mono",monospace;line-height:1.3}
+.pill.ex{color:var(--go);border-color:rgba(62,224,176,.28)}
+.pill.lo{color:var(--map);border-color:rgba(255,106,74,.28)}
+.rail{position:relative;z-index:3;padding:0 28px 48px}
+.rail h2{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--mute);margin:28px 0 12px}
+.strip{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px}
+.av{min-width:210px;max-width:240px;text-decoration:none;color:inherit;border:1px solid var(--line);background:rgba(8,10,22,.4);padding:12px;display:flex;gap:10px;align-items:center}
+.av img{width:54px;height:54px;object-fit:contain}
+.av b{display:block;font-size:12px;line-height:1.25;max-height:2.5em;overflow:hidden}
+.av em{font-style:normal;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ind2)}
+.hits{display:flex;flex-direction:column;gap:8px}
+.hit{display:flex;justify-content:space-between;gap:12px;text-decoration:none;color:var(--fog);border-bottom:1px solid rgba(124,140,255,.12);padding:8px 0;font-size:14px}
+.hit span{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--mute)}
+details{margin-top:28px;border-top:1px solid var(--line);padding-top:12px}
+summary{cursor:pointer;letter-spacing:.24em;text-transform:uppercase;font-size:11px;color:var(--ind2);list-style:none}
+pre{margin-top:12px;max-height:360px;overflow:auto;font:12px/1.45 "JetBrains Mono",monospace;color:#b7c0ff;white-space:pre-wrap}
+.empty{opacity:.45;font-family:"Instrument Serif",serif;font-style:italic}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="beam"></div>
+<header>
+  <div class="mark">FC</div>
+  <div class="brand-k">Sondeo</div>
+  <form id="s">
+    <input id="q" name="q" placeholder="otra ficha…" autocomplete="off" value="Play 5">
+    <button type="submit">IR</button>
+  </form>
+</header>
+<p id="status">ficha precargada</p>
+<div class="giant" id="giant" aria-hidden="true"></div>
+<main class="stage">
+  <div class="sheet">
+    <p class="kicker" id="kicker"></p>
+    <h1 id="title"></h1>
+    <div class="meta" id="meta"></div>
+    <div class="price" id="price"></div>
+    <p class="cart-note" id="cartNote"></p>
+    <ul class="bullets" id="bullets"></ul>
+  </div>
+  <div>
+    <div class="shot"><img id="hero" alt=""></div>
+    <aside class="glass" id="cov"></aside>
+  </div>
+</main>
+<section class="rail">
+  <h2>también vistos</h2>
+  <div class="strip" id="also"></div>
+  <h2>hallazgos</h2>
+  <div class="hits" id="hits"></div>
+  <details>
+    <summary>objeto</summary>
+    <pre id="raw"></pre>
+  </details>
+</section>
+<script type="application/json" id="seed">{"query":"Play 5","sourceUrl":"https://www.amazon.com/PlayStation%C2%AE5-console-1TB-PlayStation-5/dp/B0FRGTYSL5","asin":"B0FRGTYSL5","title":"PlayStation®5 console – 1TB","brand":"PlayStation","platform":"PlayStation 5","rating":4.7,"reviewCount":1620,"amazonsChoice":true,"boughtPastMonth":"4K+","availability":"In Stock","shipsFrom":"Amazon.com","eta":"FREE delivery Wednesday, September 2","price":{"mapHidden":true,"visible":null,"cartHint":"See price in cart","newCondition":649.0,"currency":"USD"},"images":[{"url":"https://m.media-amazon.com/images/I/51tSjJJl82L._SX342_.jpg","role":"hero"},{"url":"https://m.media-amazon.com/images/I/21d6MWY1LCL._SX38_SY50_CR,0,0,38,50_.jpg","role":"thumb"},{"url":"https://m.media-amazon.com/images/I/21CyngpxoML._SX38_SY50_CR,0,0,38,50_.jpg","role":"thumb"},{"url":"https://m.media-amazon.com/images/I/31nMMbUi2+L._SX38_SY50_CR,0,0,38,50_.jpg","role":"thumb"},{"url":"https://m.media-amazon.com/images/I/41Gr-cDOI5L._SX38_SY50_CR,0,0,38,50_.jpg","role":"thumb"},{"url":"https://m.media-amazon.com/images/I/51mCBz1F4-L._SX38_SY50_CR,0,0,38,50_.jpg","role":"thumb"},{"url":"https://m.media-amazon.com/images/I/51LsyYaKGlL._SX38_SY50_CR,0,0,38,50_.jpg","role":"thumb"},{"url":"https://m.media-amazon.com/images/I/51Rn4HSa6BL._SX38_SY50_CR,0,0,38,50_.jpg","role":"thumb"}],"bullets":["From Jan. 2028, newly released games on PlayStation will be available for purchase on PlayStation Store and at retailers in digital format only. Discs for games released before Jan. 2028 can continue to be played on this console.","PlayStation 5 Console - 1TB, includes wireless controller, 1TBSSD, Disc Drive, 2 Horizontal Stand Feet, HDMI cable, AC power cord, USB cable, printed materials, Astro's Playroom (pre-installed game)","1TB of Storage, keep your favorite games ready and waiting for you to jump in and play","Ultra-High Speed SSD, maximize you play sessions with near instant load times for installed PS5 games","Integrated I/O, the custom integration of the PS5 console's systems lets creators pull datat from the SSD so quickly that they can design games in ways never before possible","Ray Tracing, immerse yourself in owrlds with a new level of realism as rays of light are individually simulated, creating true-to-life shadows and reflections in supported PS5 games"],"alsoViewed":[{"title":"PS5 - Sony PlayStation 5 Digital Edition Gaming Console + Wireless Controller - 16GB GDDR6 RAM, 825GB SSD, 120Hz 8K Output, White","asin":"B0966NLTZS","url":"https://www.amazon.com/PS5-Playstation-Digital-Wireless-Controller/dp/B0966NLTZS","image":"https://m.media-amazon.com/images/I/616X8zng9wS._AC_SS115_.jpg","price":667.75},{"title":"Sony Playstation 5 Disc Version PS5 Console - 4K-TV Gaming, 120Hz 8K Output, 16GB GDDR6, 825GB SSD, WiFi 6, Bluetooth 5.1 (Renewed) White","asin":"B0BFK8127Y","url":"https://www.amazon.com/Sony-Playstation-Disc-Version-PS5-Console/dp/B0BFK8127Y","image":"https://m.media-amazon.com/images/I/31JaiPXYI8L._AC_SS115_.jpg","price":603.22}],"searchHits":[{"title":"PlayStation®5 console – 1TB","url":"https://www.amazon.com/PlayStation%C2%AE5-console-1TB-PlayStation-5/dp/B0FRGTYSL5","asin":"B0FRGTYSL5"},{"title":"PlayStation 5 Console (PS5)","url":"https://www.amazon.com/PlayStation-5-Console-CFI-1215A01X/dp/B0BCNKKZ91","asin":"B0BCNKKZ91"},{"title":"PlayStation 5 Disc Edition Console (slim)","url":"https://www.amazon.com/PlayStation%C2%AE5-console-slim-PlayStation-5/dp/B0CL61F39H","asin":"B0CL61F39H"}],"coverage":{"extracted":["title","asin","rating","bullets","images","alsoViewed","mapHidden","newConditionPrice","availability"],"lost":["buy-box exact price (MAP)","weight/dims reliable","Q&A","full review bodies","add-to-cart without Amazon login","variants"]}}</script>
+<script>
+const $ = (id) => document.getElementById(id);
+const usd = (n) => n == null ? "—" : new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(n);
+function seed(){
+  try { return JSON.parse($("seed").textContent); } catch (e) { return null; }
+}
+function heroUrl(p){
+  const imgs = p.images || [];
+  const h = imgs.find(i => i.role === "hero") || imgs[0];
+  return h ? h.url : "";
+}
+function paint(p){
+  if (!p || p.error){
+    $("status").textContent = (p && p.error) ? p.error : "sin ficha";
+    return;
+  }
+  const blob = ((p.brand||"")+" "+(p.platform||"")+" "+(p.title||""));
+  if (/play.?station/i.test(blob)) $("giant").innerHTML = "<b>PLAY</b><b>STATION</b><em>5</em>";
+  else {
+    const w = (p.brand || p.title || "SONDEO").split(/\s+/);
+    $("giant").innerHTML = "<b>" + (w[0]||"") + "</b><b>" + (w[1]||"") + "</b><em>" + (p.platform||"") + "</em>";
+  }
+  $("kicker").textContent = (p.query || "sondeo") + (p.amazonsChoice ? " · elección" : "");
+  $("title").textContent = p.title || "—";
+  const hero = heroUrl(p);
+  $("hero").src = hero;
+  $("hero").alt = p.title || "";
+  const meta = [];
+  if (p.asin) meta.push('<span class="chip">' + p.asin + "</span>");
+  if (p.rating != null) meta.push('<span class="chip">★ ' + p.rating + (p.reviewCount ? " · " + p.reviewCount.toLocaleString("es") + " reseñas" : "") + "</span>");
+  if (p.boughtPastMonth) meta.push('<span class="chip">' + p.boughtPastMonth + " mes</span>");
+  if (p.availability) meta.push('<span class="chip ok">' + (p.availability === "In Stock" ? "en stock" : p.availability) + "</span>");
+  if (p.eta) meta.push('<span class="chip">' + p.eta.replace("FREE delivery","envío") + "</span>");
+  $("meta").innerHTML = meta.join("");
+  const pr = p.price || {};
+  const box = $("price");
+  if (pr.mapHidden){
+    box.className = "price";
+    box.innerHTML = '<div class="stamp">MAP</div><div class="hint">' + (pr.cartHint || "ver en carrito").toLowerCase() + '<span class="sub">nuevo ' + usd(pr.newCondition) + "</span></div>";
+    $("cartNote").textContent = "carrito exige login Amazon";
+  } else {
+    box.className = "price visible";
+    box.innerHTML = '<div class="num">' + usd(pr.visible) + '</div><div class="hint"><span class="sub">' + (pr.currency || "USD") + "</span></div>";
+    $("cartNote").textContent = "";
+  }
+  $("bullets").innerHTML = (p.bullets || []).map(b => "<li>" + b + "</li>").join("") || '<li class="empty">sin viñetas</li>';
+  const cov = p.coverage || {extracted:[], lost:[]};
+  const ex = cov.extracted || [];
+  const lo = cov.lost || [];
+  const tot = ex.length + lo.length || 1;
+  const pct = Math.round(ex.length / tot * 100);
+  $("cov").innerHTML = "<h2>cobertura</h2><div class='score'>" + ex.length + "<span> / " + tot + " · " + pct + "%</span></div><div class='bar'><i style='width:" + pct + "%'></i></div><div class='cols'><div><h3>extraído " + ex.length + "</h3>" + ex.map(x => "<span class='pill ex'>" + x + "</span>").join("") + "</div><div><h3>perdido " + lo.length + "</h3>" + lo.map(x => "<span class='pill lo'>" + x + "</span>").join("") + "</div></div>";
+  const also = p.alsoViewed || [];
+  $("also").innerHTML = also.length ? also.map(a => '<a class="av" href="' + (a.url||"#") + '" target="_blank" rel="noopener"><img src="' + (a.image||"") + '" alt=""><div><b>' + (a.title||a.asin) + "</b><em>" + usd(a.price) + " · " + (a.asin||"") + "</em></div></a>").join("") : '<p class="empty">nadie más</p>';
+  const hits = p.searchHits || [];
+  $("hits").innerHTML = hits.length ? hits.map(h => '<a class="hit" href="' + (h.url||"#") + '" target="_blank" rel="noopener">' + (h.title||h.asin) + "<span>" + (h.asin||"") + "</span></a>").join("") : '<p class="empty">sin hallazgos</p>';
+  $("raw").textContent = JSON.stringify(p, null, 2);
+}
+async function boot(){
+  let p = null;
+  try {
+    const r = await fetch("product.json", {cache:"no-store"});
+    if (r.ok) p = await r.json();
+  } catch (e) {}
+  if (!p) p = seed();
+  paint(p);
+}
+$("s").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const q = $("q").value.trim();
+  if (!q) return;
+  document.body.classList.add("busy");
+  $("status").textContent = "rastreando…";
+  try {
+    const r = await fetch("/api/search", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({q})
+    });
+    const data = await r.json();
+    if (!r.ok && data.error){
+      $("status").textContent = data.error;
+      if (data.searchHits) paint(Object.assign(seed()||{}, data));
+    } else {
+      $("status").textContent = "live · " + q;
+      paint(data);
+    }
+  } catch (e) {
+    $("status").textContent = "levanta serve.py";
+  }
+  document.body.classList.remove("busy");
+});
+boot();
+</script>
+</body>
+</html>
