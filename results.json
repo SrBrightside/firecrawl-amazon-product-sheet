@@ -2,6 +2,7 @@
   "query": "Play 5",
   "sourceUrl": "https://www.amazon.com/s?k=Play+5",
   "resultCountLabel": "1-16 of over 10,000 results",
+  "shipTo": "ONBM · Miami 33166",
   "results": [
     {
       "position": 1,
@@ -12,17 +13,39 @@
       "rating": 4.7,
       "reviewCount": 774,
       "price": null,
-      "priceLabel": "Click to see price",
+      "priceLabel": "Ver precio",
       "mapHidden": true,
       "boughtPastMonth": "7K+",
       "prime": true,
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": "Overall Pick"
+      "badge": "Selección general",
+      "extra": "Calificación de la ESRB: Todos",
+      "brand": "PlayStation 5"
     },
     {
       "position": 2,
+      "asin": "B0FNDJZ3YG",
+      "title": "Razer Raiju V3 Pro Wireless Esports Controller, PlayStation 5 & PC, White | Lag-free Esports Grade Performance, Officially...",
+      "url": "https://www.amazon.com/dp/B0FNDJZ3YG",
+      "image": "https://m.media-amazon.com/images/I/71N+DiwIVHL._AC_UL640_QL65_.jpg",
+      "rating": null,
+      "reviewCount": null,
+      "price": null,
+      "priceLabel": null,
+      "mapHidden": false,
+      "boughtPastMonth": null,
+      "prime": true,
+      "delivery": null,
+      "stock": null,
+      "sponsored": true,
+      "badge": null,
+      "extra": null,
+      "brand": null
+    },
+    {
+      "position": 3,
       "asin": "B0966NLTZS",
       "title": "PS5 - Sony PlayStation 5 Digital Edition Gaming Console + Wireless Controller - 16GB GDDR6 RAM, 825GB SSD, 120Hz 8K Output, White",
       "url": "https://www.amazon.com/PS5-Playstation-Digital-Wireless-Controller/dp/B0966NLTZS/ref=sr_1_2",
@@ -35,12 +58,14 @@
       "boughtPastMonth": "300+",
       "prime": true,
       "delivery": "FREE delivery Sep 2 - 4",
-      "stock": "Only 3 left in stock - order soon.",
+      "stock": "Only 3 left in stock - order soon",
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": null,
+      "brand": null
     },
     {
-      "position": 3,
+      "position": 4,
       "asin": "B09W14BJF1",
       "title": "Sony PlayStation 5 PS5 Disc Version Gaming Console, 4K Blu-ray Player, 16GB GDDR6 Memory, Ultra-High Speed 825GB SSD, WiFi 6, Bluetooth 5.1, 120Hz 8K Output",
       "url": "https://www.amazon.com/Sony-Playstation-Version-Ultra-High-Bluetooth/dp/B09W14BJF1/ref=sr_1_3",
@@ -53,12 +78,14 @@
       "boughtPastMonth": "200+",
       "prime": false,
       "delivery": "FREE delivery Wed, Sep 2",
-      "stock": "Only 4 left in stock - order soon.",
+      "stock": "Only 4 left in stock - order soon",
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": null,
+      "brand": null
     },
     {
-      "position": 4,
+      "position": 5,
       "asin": "B09SVM186Y",
       "title": "Playstation 5 Digital Edition PS5 Gaming (Disc Free) Console (Renewed)",
       "url": "https://www.amazon.com/Playstation-Digital-Gaming-Console-Renewed/dp/B09SVM186Y/ref=sr_1_4",
@@ -71,12 +98,14 @@
       "boughtPastMonth": "100+",
       "prime": false,
       "delivery": "FREE delivery Sep 2 - 4",
-      "stock": "Only 7 left in stock - order soon.",
+      "stock": "Only 7 left in stock - order soon",
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": null,
+      "brand": "See options"
     },
     {
-      "position": 5,
+      "position": 6,
       "asin": "B0BFK8127Y",
       "title": "Sony Playstation 5 Disc Version PS5 Console - 4K-TV Gaming, 120Hz 8K Output, 16GB GDDR6, 825GB SSD, WiFi 6, Bluetooth 5.1 (Renewed) White",
       "url": "https://www.amazon.com/Sony-Playstation-Disc-Version-PS5-Console/dp/B0BFK8127Y/ref=sr_1_5",
@@ -89,12 +118,14 @@
       "boughtPastMonth": "100+",
       "prime": false,
       "delivery": "FREE delivery Sep 2 - 4",
-      "stock": "Only 17 left in stock - order soon.",
+      "stock": "Only 17 left in stock - order soon",
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": null,
+      "brand": "See options"
     },
     {
-      "position": 6,
+      "position": 7,
       "asin": "B08Z8JV4RB",
       "title": "PlayStation 5 Digital Edition (Renewed)",
       "url": "https://www.amazon.com/PlayStation-5-Digital-Renewed/dp/B08Z8JV4RB/ref=sr_1_6",
@@ -107,12 +138,14 @@
       "boughtPastMonth": "200+",
       "prime": false,
       "delivery": "FREE delivery Fri, Sep 11",
-      "stock": "Only 8 left in stock - order soon.",
+      "stock": "Only 8 left in stock - order soon",
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": null,
+      "brand": "See options"
     },
     {
-      "position": 7,
+      "position": 8,
       "asin": "B0FJYHTC3X",
       "title": "Hello Kitty Island Adventure - PlayStation 5",
       "url": "https://www.amazon.com/Hello-Kitty-Island-Adventure-PlayStation-5/dp/B0FJYHTC3X/ref=sr_1_8",
@@ -127,10 +160,12 @@
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Todos",
+      "brand": null
     },
     {
-      "position": 8,
+      "position": 9,
       "asin": "B0C7WQRCPB",
       "title": "MARVEL’S SPIDER-MAN 2 – PS5 Standard Edition",
       "url": "https://www.amazon.com/MARVELS-SPIDER-MAN-2-Standard-PlayStation-5/dp/B0C7WQRCPB/ref=sr_1_9",
@@ -145,10 +180,12 @@
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Adolescentes",
+      "brand": "(1.5K)"
     },
     {
-      "position": 9,
+      "position": 10,
       "asin": "B0FH5GW64H",
       "title": "NBA 2K26 - PlayStation 5",
       "url": "https://www.amazon.com/NBA-2K26-PlayStation-5/dp/B0FH5GW64H/ref=sr_1_10",
@@ -163,10 +200,12 @@
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Todos",
+      "brand": "(2.2K)"
     },
     {
-      "position": 10,
+      "position": 11,
       "asin": "B08FC64CNF",
       "title": "Sackboy: A Big Adventure – PlayStation 5",
       "url": "https://www.amazon.com/Sackboy-Big-Adventure-PlayStation-5/dp/B08FC64CNF/ref=sr_1_11",
@@ -181,10 +220,12 @@
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Todos",
+      "brand": "(4K)"
     },
     {
-      "position": 11,
+      "position": 12,
       "asin": "B089X4XCLB",
       "title": "Marvel’s Spider-Man: Miles Morales – PlayStation 5",
       "url": "https://www.amazon.com/Marvels-Spider-Man-Miles-Morales-PlayStation-5/dp/B089X4XCLB/ref=sr_1_12",
@@ -197,12 +238,14 @@
       "boughtPastMonth": "100+",
       "prime": true,
       "delivery": "FREE delivery Tomorrow, Aug 29",
-      "stock": "Only 12 left in stock - order soon.",
+      "stock": "Only 12 left in stock - order soon",
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Adolescentes",
+      "brand": "(4.8K)"
     },
     {
-      "position": 12,
+      "position": 13,
       "asin": "B09SW6GCGL",
       "title": "Gran Turismo 7 Standard Edition - PlayStation 5",
       "url": "https://www.amazon.com/Gran-Turismo-7-Standard-PlayStation-5/dp/B09SW6GCGL/ref=sr_1_13",
@@ -217,10 +260,12 @@
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Todos",
+      "brand": "(2.2K)"
     },
     {
-      "position": 13,
+      "position": 14,
       "asin": "B0B3QWRQL8",
       "title": "The Last of Us Part I – PlayStation 5",
       "url": "https://www.amazon.com/Last-Us-Part-PlayStation-5/dp/B0B3QWRQL8/ref=sr_1_14",
@@ -235,10 +280,12 @@
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Maduro",
+      "brand": "(2.7K)"
     },
     {
-      "position": 14,
+      "position": 15,
       "asin": "B0FRSZT2H5",
       "title": "PlayStation®5 Digital Edition 825GB – Fortnite Flowering Chaos Bundle",
       "url": "https://www.amazon.com/PlayStation%C2%AE5-Digital-825GB-Flowering-PlayStation-5/dp/B0FRSZT2H5/ref=sr_1_15",
@@ -253,10 +300,12 @@
       "delivery": null,
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Todos",
+      "brand": "(1K)"
     },
     {
-      "position": 15,
+      "position": 16,
       "asin": "B0CL61F39H",
       "title": "PlayStation 5 Disc Edition Console (slim)",
       "url": "https://www.amazon.com/PlayStation%C2%AE5-console-slim-PlayStation-5/dp/B0CL61F39H/ref=sr_1_16",
@@ -271,10 +320,12 @@
       "delivery": null,
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": null,
+      "brand": "(5.6K)"
     },
     {
-      "position": 16,
+      "position": 17,
       "asin": "B0DJHF6Q9Z",
       "title": "PlayStation PS5 Console - Fortnite Cobalt Star Disc Edition",
       "url": "https://www.amazon.com/PS5-Console-Fortnite-Cobalt-PlayStation-5/dp/B0DJHF6Q9Z/ref=sr_1_17",
@@ -289,7 +340,9 @@
       "delivery": null,
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Adolescentes",
+      "brand": "(1.2K)"
     }
   ],
   "coverage": {
@@ -301,7 +354,9 @@
       "reviewCount",
       "price or MAP hint",
       "boughtPastMonth",
-      "delivery"
+      "delivery",
+      "ESRB/extra",
+      "sponsored"
     ],
     "lost": [
       "buy-box exact price on Overall Pick",

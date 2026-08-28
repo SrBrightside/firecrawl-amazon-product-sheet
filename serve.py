@@ -86,13 +86,48 @@ def scrape_markdown(payload):
     return ""
 
 
+
 def card_window(md, start):
     nxt = CARD_RE.search(md, start + 1)
     end = nxt.start() if nxt else min(len(md), start + 1800)
     return md[start:end]
 
 
-def parse_card(md, match, position):
+ESRB_MAP = {
+    "Everyone": "Todos",
+    "Everyone 10+": "Todos +10",
+    "Teen": "Adolescentes",
+    "Mature": "Maduro",
+}
+
+
+def extra_line(chunk):
+    m = re.search(r"ESRB Rating:\s*([^\n]+)", chunk)
+    if not m:
+        return None
+    raw = m.group(1).replace("\\", "").split("|")[0].strip()
+    mapped = ESRB_MAP.get(raw, raw)
+    return f"Calificación de la ESRB: {mapped}"
+
+
+def brand_line(chunk, asin, title):
+    links = re.findall(
+        rf"\[([^\]]{{2,48}})\]\(https://www\.amazon\.com/[^)]+/dp/{asin}",
+        chunk,
+    )
+    title_l = (title or "").lower()
+    for label in links:
+        label = label.replace("**", "").strip()
+        if not label or label.lower() in title_l:
+            continue
+        if re.search(r"\$\d|click to see|out of 5|^\(?[\d,]+\)?$", label, re.I):
+            continue
+        if len(label) <= 40:
+            return label
+    return None
+
+
+def parse_card(md, match, position, sponsored=False):
     alt, image, slug, asin, sr = match.groups()
     chunk = card_window(md, match.start())
     title = alt.strip()
@@ -117,7 +152,7 @@ def parse_card(md, match, position):
     price = None
     price_label = None
     if map_hidden:
-        price_label = "Click to see price"
+        price_label = "Ver precio"
     else:
         pm = re.search(r"\$(\d[\d,]*\.\d{2})", chunk)
         if pm:
@@ -130,7 +165,7 @@ def parse_card(md, match, position):
     prime = bool(re.search(r"Join Prime|Prime delivery|\bPrime\b", chunk))
     delivery = None
     dm = re.search(
-        r"((?:FREE delivery|Get it) [A-Za-z]+(?:,?\s+[A-Za-z]+\s+\d{1,2})?(?:\s*-\s*\d{1,2})?)",
+        r"((?:FREE delivery|Get it)\s+[A-Za-z]+(?:,\s+[A-Za-z]+\s+\d{1,2})?(?:\s+\d{1,2})?(?:\s*-\s*\d{1,2})?)",
         chunk,
     )
     if dm:
@@ -139,12 +174,15 @@ def parse_card(md, match, position):
     sm = re.search(r"(Only \d+ left in stock[^\n.]*)", chunk)
     if sm:
         stock = sm.group(1).strip().rstrip(".")
+    ahead = (md or "")[max(0, match.start() - 500) : match.start()] + chunk
     badge = None
-    if re.search(r"Overall Pick", chunk):
-        badge = "Overall Pick"
-    elif re.search(r"Amazon'?s Choice", chunk):
+    if re.search(r"Overall Pick", ahead):
+        badge = "Selección general"
+    elif re.search(r"Amazon'?s Choice", ahead):
         badge = "Amazon's Choice"
     url = f"https://www.amazon.com/{slug}/dp/{asin}/ref={sr}"
+    extra = extra_line(chunk)
+    brand = brand_line(chunk, asin, title)
     return {
         "position": position,
         "asin": asin,
@@ -160,9 +198,80 @@ def parse_card(md, match, position):
         "prime": prime,
         "delivery": delivery,
         "stock": stock,
-        "sponsored": False,
+        "sponsored": sponsored,
         "badge": badge,
+        "extra": extra,
+        "brand": brand,
     }
+
+
+SPON_RE = re.compile(
+    r"\[!\[([^\]]*)\]\((https://m\.media-amazon\.com/images/I/[^)]+)\)\]"
+    r"\((https://(?:aax-[^)\s]+|www\.amazon\.com/[^)\s]+/dp/[A-Z0-9]{10})[^)]*)\)"
+)
+
+
+def parse_sponsored(md, seen):
+    out = []
+    for match in SPON_RE.finditer(md or ""):
+        alt, image, url = match.groups()
+        window = (md or "")[match.end() : match.end() + 2500]
+        if "aax-" not in url:
+            continue
+        asin_m = re.search(r"/dp/([A-Z0-9]{10})", url)
+        asin = asin_m.group(1) if asin_m else None
+        if not asin or asin in seen:
+            continue
+        bold = re.search(r"Sponsored\[\*\*([^\]]+)\*\*\]", window)
+        title = bold.group(1).replace("\\", "").strip() if bold else alt.strip()
+        rating = None
+        rm = re.search(r"(\d(?:\.\d)?)_?\d(?:\.\d)? out of 5 stars", window)
+        if rm:
+            rating = float(rm.group(1))
+        reviews = None
+        rc = re.search(r"\[\(?([\d,]+)\)?\]\([^)]+#customerReviews\)", window)
+        if rc:
+            try:
+                reviews = int(rc.group(1).replace(",", ""))
+            except ValueError:
+                reviews = None
+        price = None
+        price_label = None
+        pm = re.search(r"\$(\d[\d,]*\.\d{2})", window)
+        if pm:
+            price = parse_money(pm.group(1))
+            price_label = f"${pm.group(1)}"
+        bought = None
+        bm = re.search(r"([\d]+K?\+)\s+bought in past month", window, re.I)
+        if bm:
+            bought = bm.group(1)
+        extra = extra_line(window)
+        seen.add(asin)
+        out.append(
+            {
+                "position": 0,
+                "asin": asin,
+                "title": title,
+                "url": "https://www.amazon.com/dp/" + asin,
+                "image": image,
+                "rating": rating,
+                "reviewCount": reviews,
+                "price": price,
+                "priceLabel": price_label,
+                "mapHidden": False,
+                "boughtPastMonth": bought,
+                "prime": True,
+                "delivery": None,
+                "stock": None,
+                "sponsored": True,
+                "badge": None,
+                "extra": extra,
+                "brand": None,
+            }
+        )
+        if len(out) >= 1:
+            break
+    return out
 
 
 def parse_serp(md, query, source_url):
@@ -175,15 +284,18 @@ def parse_serp(md, query, source_url):
         asin = match.group(4)
         if asin in seen:
             continue
-        if "aax-us-" in match.group(0) or "sponsored" in match.group(0).lower():
+        if "aax-us-" in match.group(0):
             continue
         seen.add(asin)
         results.append(parse_card(md, match, len(results) + 1))
+    for i, spon in enumerate(parse_sponsored(md, seen)):
+        insert_at = 1 if results else 0
+        results.insert(insert_at + i, spon)
+    for i, item in enumerate(results, 1):
+        item["position"] = i
     extracted = []
     if results:
-        extracted.append("title")
-        extracted.append("asin")
-        extracted.append("image")
+        extracted.extend(["title", "asin", "image"])
     if any(r.get("rating") is not None for r in results):
         extracted.append("rating")
     if any(r.get("reviewCount") for r in results):
@@ -194,6 +306,10 @@ def parse_serp(md, query, source_url):
         extracted.append("boughtPastMonth")
     if any(r.get("delivery") for r in results):
         extracted.append("delivery")
+    if any(r.get("extra") for r in results):
+        extracted.append("ESRB/extra")
+    if any(r.get("sponsored") for r in results):
+        extracted.append("sponsored")
     lost = [
         "buy-box exact price on Overall Pick",
         "filters/sidebar",
@@ -206,11 +322,12 @@ def parse_serp(md, query, source_url):
         "query": query or "",
         "sourceUrl": source_url,
         "resultCountLabel": label,
+        "shipTo": "ONBM · Miami 33166",
         "results": results,
         "coverage": {
             "extracted": extracted,
             "lost": lost,
-            "organicCards": len(results),
+            "organicCards": sum(1 for r in results if not r.get("sponsored")),
             "markdownBytes": len(md.encode("utf-8")),
         },
     }

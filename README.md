@@ -1,8 +1,8 @@
-# Firecrawl Amazon Product Sheet
+# Firecrawl Amazon search results
 
-A small demo that turns a [Firecrawl](https://www.firecrawl.dev) Amazon **search results page** into a SERP: a list of product cards (image, title, price, rating), not a single product detail page.
+A small demo that turns a [Firecrawl](https://www.firecrawl.dev) Amazon **search results page** into a mobile SERP: a vertical list of product cards (image, title, rating, price, delivery, add-to-cart), not a single product detail page.
 
-The hosted page is static. It ships a preloaded scrape of `https://www.amazon.com/s?k=Play+5` (16 organic results). You can open the page with no API key. The layout is responsive (phone and desktop).
+The hosted page is static. It ships a preloaded scrape of `https://www.amazon.com/s?k=Play+5`. You can open it with no API key. Phone layout first; on desktop it stays a list.
 
 Live demo: https://srbrightside.github.io/firecrawl-amazon-product-sheet/
 
@@ -12,11 +12,11 @@ This is not an Amazon product, not Amazon Business, and not a production crawler
 
 | File | Role |
 | --- | --- |
-| `index.html` | SERP UI. Reads `results.json` (or the JSON embedded in the page). |
-| `results.json` | Array of organic search hits parsed from the Firecrawl markdown. |
-| `serve.py` | Optional local server. `POST /api/search` scrapes `amazon.com/s?k=…` and returns the same JSON shape. |
+| `index.html` | Mobile SERP UI. Reads embedded / `results.json`. |
+| `results.json` | Array of organic hits plus one sponsored card, parsed from Firecrawl markdown. |
+| `serve.py` | Optional local server. `POST /api/search` scrapes `amazon.com/s?k=…`. |
 
-Each hit: `asin`, `title`, `url`, `image`, `rating`, `reviewCount`, `price` / `priceLabel` / `mapHidden`, `boughtPastMonth`, `delivery`.
+Each hit: `asin`, `title`, `url`, `image`, `rating`, `reviewCount`, `price` / `priceLabel` / `mapHidden`, `boughtPastMonth`, `delivery`, `extra` (ESRB), `brand`, `sponsored`, `badge`.
 
 ## View the demo
 
@@ -36,12 +36,12 @@ npx -y firecrawl-cli@latest login --browser
 python3 serve.py
 ```
 
-Then submit a query in the page. The server scrapes `https://www.amazon.com/s?k={query}` and parses organic cards.
+Then submit a query in the page.
 
 ## Limits
 
-- The first hit often hides the buy-box price (“Click to see price”).
-- Sponsored/aax creatives are dropped; organic `sr_1_*` cards are kept.
+- The Overall Pick often hides the buy-box price.
+- Filter chips are static in the public page.
 - Keyless Firecrawl 429s on shared IPs. Use a free login.
 
 Scraping Amazon may conflict with Amazon’s conditions of use. This repo visualizes Firecrawl output under your own account.

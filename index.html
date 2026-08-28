@@ -1,59 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Play 5 · Amazon search results</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>play 5 · resultados</title>
 <style>
-:root{--ink:#0f1111;--mute:#565959;--line:#d5d9d9;--bg:#eaeded;--card:#fff;--link:#007185;--price:#b12704;--star:#de7921;--prime:#00a8e1;--head:#131921}
+:root{
+  --sand:#e4c48a; --sand2:#d7b56f; --ink:#0f1111; --mute:#565959;
+  --line:#e7e7e7; --bg:#f2f2f2; --card:#fff; --cta:#ffd814; --cta2:#f7ca00;
+  --prime:#00a8e1; --star:#de7921; --link:#0f1111;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--ink);font:14px/1.4 "Amazon Ember",Arial,sans-serif;min-height:100%}
-header{background:var(--head);color:#fff;padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.brand{font-weight:800;letter-spacing:.04em;font-size:15px;white-space:nowrap}
-form{display:flex;flex:1;min-width:min(100%,240px);max-width:760px;border-radius:8px;overflow:hidden}
-form input{flex:1;border:0;padding:10px 12px;font:inherit;min-width:0}
-form button{border:0;background:#febd69;color:#111;font-weight:700;padding:10px 16px;cursor:pointer}
-.note{padding:8px 16px;font-size:12px;color:var(--mute);background:#fff;border-bottom:1px solid var(--line)}
-.wrap{max-width:980px;margin:0 auto;padding:12px}
-h1{font-size:18px;font-weight:500;margin:8px 0 12px}
-h1 b{font-weight:800}
-.row{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px;text-decoration:none;color:inherit}
-.row img{width:140px;height:140px;object-fit:contain;flex-shrink:0;background:#fff}
-.body{flex:1;min-width:0}
-.title{color:var(--link);font-size:16px;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.stars{color:var(--star);font-size:13px;margin-top:4px}
-.stars span{color:var(--mute)}
-.price{color:var(--price);font-size:20px;font-weight:700;margin-top:6px}
-.price.hidden{font-size:15px;font-weight:600}
-.meta{color:var(--mute);font-size:12px;margin-top:4px}
-.badge{display:inline-block;background:#232f3e;color:#fff;font-size:11px;padding:2px 6px;border-radius:3px;margin-bottom:4px}
-.prime{color:#00a8e1;font-weight:700;font-size:12px}
-.cov{margin:18px 0;padding:12px;background:#fff;border:1px dashed var(--line);border-radius:8px;font-size:12px;color:var(--mute)}
-.err{color:#b12704;padding:16px}
-@media (max-width:640px){
-  .row{flex-direction:row;gap:10px;padding:10px}
-  .row img{width:92px;height:92px}
-  .title{font-size:14px}
-  .price{font-size:18px}
-  header{padding:10px}
+html,body{background:#d8d8d8;color:var(--ink);font:14px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;min-height:100%}
+.phone{max-width:430px;margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 0 1px #ccc}
+.top{background:linear-gradient(#ead19a,#e0bf78);padding:10px 10px 0}
+.nav{display:flex;align-items:center;gap:8px}
+.iconbtn{width:36px;height:36px;border:0;background:transparent;font-size:20px;cursor:pointer;color:#111;flex-shrink:0}
+form{flex:1;display:flex;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+form input{flex:1;border:0;padding:10px 8px 10px 4px;font:15px/1.2 inherit;min-width:0;outline:none}
+.lens{padding:0 0 0 12px;opacity:.55;font-size:16px;line-height:36px}
+.ship{display:flex;align-items:center;gap:6px;padding:8px 6px 10px;font-size:13px;color:#111}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;background:#fff;border-bottom:1px solid var(--line);scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;border:1px solid #888c8c;background:#fff;border-radius:20px;padding:7px 12px;font-size:13px;white-space:nowrap}
+.chip.on{border-color:#0f1111}
+.toggle{display:flex;align-items:center;gap:6px}
+.dot{width:28px;height:16px;border-radius:99px;background:#0f1111;position:relative}
+.dot:after{content:"";position:absolute;right:2px;top:2px;width:12px;height:12px;border-radius:50%;background:#00a8e1}
+.card{display:flex;gap:10px;padding:12px;border-bottom:8px solid var(--bg);background:#fff;text-decoration:none;color:inherit}
+.media{position:relative;width:128px;flex-shrink:0}
+.media img{width:128px;height:148px;object-fit:contain;background:#fff}
+.pick{position:absolute;top:0;left:0;background:#232f3e;color:#fff;font-size:11px;padding:3px 7px;border-radius:3px;z-index:1}
+.heart{position:absolute;left:4px;bottom:4px;width:28px;height:28px;border-radius:50%;border:0;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);font-size:14px}
+.info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.spon{font-size:12px;color:var(--mute);margin-bottom:2px}
+.title{font-size:15px;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.extra,.brand,.bought,.eta{font-size:12px;color:#0f1111}
+.extra,.bought{color:#0f1111}
+.rating{font-size:13px;margin:2px 0}
+.stars{color:var(--star);letter-spacing:-1px}
+.rating .n{color:var(--mute)}
+.price{font-size:22px;font-weight:700;margin:4px 0 2px}
+.price small{font-size:12px;font-weight:700;position:relative;top:-8px}
+.price.hidden{font-size:15px;font-weight:600;color:#0f1111}
+.prime{color:var(--prime);font-weight:800;font-size:13px;letter-spacing:-.02em}
+.prime:before{content:"● ";color:#00a8e1}
+.cart{display:block;margin-top:8px;background:var(--cta);border:0;border-radius:20px;padding:10px 12px;font:600 14px inherit;text-align:center;color:#111;text-decoration:none}
+.cart:active{background:var(--cta2)}
+.note{font-size:11px;color:var(--mute);padding:10px 14px 24px;background:var(--bg)}
+@media (min-width:720px){
+  body{padding:24px 0}
+  .phone{min-height:auto;border-radius:12px;overflow:hidden}
 }
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">Firecrawl · Amazon SERP</div>
-  <form id="f"><input id="q" value="Play 5" placeholder="Search Amazon" autocomplete="off"/><button>Search</button></form>
-</header>
-<p class="note" id="status">Preloaded search for “Play 5”. No Firecrawl key on this page.</p>
-<div class="wrap">
-  <h1 id="count"></h1>
+<div class="phone">
+  <header class="top">
+    <div class="nav">
+      <button class="iconbtn" type="button" aria-label="Atrás">‹</button>
+      <form id="f">
+        <span class="lens">⌕</span>
+        <input id="q" value="play 5" placeholder="Buscar" autocomplete="off"/>
+      </form>
+      <button class="iconbtn" type="button" aria-label="Compartir">↗</button>
+    </div>
+    <div class="ship">📍 Enviar a <b id="ship">ONBM · Miami 33166</b> ▾</div>
+  </header>
+  <div class="chips">
+    <span class="chip">☰</span>
+    <span class="chip">★★★★ o más</span>
+    <span class="chip">Todos los descuentos</span>
+    <span class="chip on toggle"><b style="color:#00a8e1">prime</b> <span class="dot"></span></span>
+    <span class="chip">Marcas ▾</span>
+    <span class="chip">Vendedor ▾</span>
+    <span class="chip">Marcas Premium</span>
+  </div>
   <div id="list"></div>
-  <div class="cov" id="cov"></div>
+  <p class="note" id="status"></p>
 </div>
 <script type="application/json" id="seed">{
   "query": "Play 5",
   "sourceUrl": "https://www.amazon.com/s?k=Play+5",
   "resultCountLabel": "1-16 of over 10,000 results",
+  "shipTo": "ONBM · Miami 33166",
   "results": [
     {
       "position": 1,
@@ -64,17 +94,39 @@ h1 b{font-weight:800}
       "rating": 4.7,
       "reviewCount": 774,
       "price": null,
-      "priceLabel": "Click to see price",
+      "priceLabel": "Ver precio",
       "mapHidden": true,
       "boughtPastMonth": "7K+",
       "prime": true,
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": "Overall Pick"
+      "badge": "Selección general",
+      "extra": "Calificación de la ESRB: Todos",
+      "brand": "PlayStation 5"
     },
     {
       "position": 2,
+      "asin": "B0FNDJZ3YG",
+      "title": "Razer Raiju V3 Pro Wireless Esports Controller, PlayStation 5 & PC, White | Lag-free Esports Grade Performance, Officially...",
+      "url": "https://www.amazon.com/dp/B0FNDJZ3YG",
+      "image": "https://m.media-amazon.com/images/I/71N+DiwIVHL._AC_UL640_QL65_.jpg",
+      "rating": null,
+      "reviewCount": null,
+      "price": null,
+      "priceLabel": null,
+      "mapHidden": false,
+      "boughtPastMonth": null,
+      "prime": true,
+      "delivery": null,
+      "stock": null,
+      "sponsored": true,
+      "badge": null,
+      "extra": null,
+      "brand": null
+    },
+    {
+      "position": 3,
       "asin": "B0966NLTZS",
       "title": "PS5 - Sony PlayStation 5 Digital Edition Gaming Console + Wireless Controller - 16GB GDDR6 RAM, 825GB SSD, 120Hz 8K Output, White",
       "url": "https://www.amazon.com/PS5-Playstation-Digital-Wireless-Controller/dp/B0966NLTZS/ref=sr_1_2",
@@ -87,12 +139,14 @@ h1 b{font-weight:800}
       "boughtPastMonth": "300+",
       "prime": true,
       "delivery": "FREE delivery Sep 2 - 4",
-      "stock": "Only 3 left in stock - order soon.",
+      "stock": "Only 3 left in stock - order soon",
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": null,
+      "brand": null
     },
     {
-      "position": 3,
+      "position": 4,
       "asin": "B09W14BJF1",
       "title": "Sony PlayStation 5 PS5 Disc Version Gaming Console, 4K Blu-ray Player, 16GB GDDR6 Memory, Ultra-High Speed 825GB SSD, WiFi 6, Bluetooth 5.1, 120Hz 8K Output",
       "url": "https://www.amazon.com/Sony-Playstation-Version-Ultra-High-Bluetooth/dp/B09W14BJF1/ref=sr_1_3",
@@ -105,12 +159,14 @@ h1 b{font-weight:800}
       "boughtPastMonth": "200+",
       "prime": false,
       "delivery": "FREE delivery Wed, Sep 2",
-      "stock": "Only 4 left in stock - order soon.",
+      "stock": "Only 4 left in stock - order soon",
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": null,
+      "brand": null
     },
     {
-      "position": 4,
+      "position": 5,
       "asin": "B09SVM186Y",
       "title": "Playstation 5 Digital Edition PS5 Gaming (Disc Free) Console (Renewed)",
       "url": "https://www.amazon.com/Playstation-Digital-Gaming-Console-Renewed/dp/B09SVM186Y/ref=sr_1_4",
@@ -123,12 +179,14 @@ h1 b{font-weight:800}
       "boughtPastMonth": "100+",
       "prime": false,
       "delivery": "FREE delivery Sep 2 - 4",
-      "stock": "Only 7 left in stock - order soon.",
+      "stock": "Only 7 left in stock - order soon",
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": null,
+      "brand": "See options"
     },
     {
-      "position": 5,
+      "position": 6,
       "asin": "B0BFK8127Y",
       "title": "Sony Playstation 5 Disc Version PS5 Console - 4K-TV Gaming, 120Hz 8K Output, 16GB GDDR6, 825GB SSD, WiFi 6, Bluetooth 5.1 (Renewed) White",
       "url": "https://www.amazon.com/Sony-Playstation-Disc-Version-PS5-Console/dp/B0BFK8127Y/ref=sr_1_5",
@@ -141,12 +199,14 @@ h1 b{font-weight:800}
       "boughtPastMonth": "100+",
       "prime": false,
       "delivery": "FREE delivery Sep 2 - 4",
-      "stock": "Only 17 left in stock - order soon.",
+      "stock": "Only 17 left in stock - order soon",
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": null,
+      "brand": "See options"
     },
     {
-      "position": 6,
+      "position": 7,
       "asin": "B08Z8JV4RB",
       "title": "PlayStation 5 Digital Edition (Renewed)",
       "url": "https://www.amazon.com/PlayStation-5-Digital-Renewed/dp/B08Z8JV4RB/ref=sr_1_6",
@@ -159,12 +219,14 @@ h1 b{font-weight:800}
       "boughtPastMonth": "200+",
       "prime": false,
       "delivery": "FREE delivery Fri, Sep 11",
-      "stock": "Only 8 left in stock - order soon.",
+      "stock": "Only 8 left in stock - order soon",
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": null,
+      "brand": "See options"
     },
     {
-      "position": 7,
+      "position": 8,
       "asin": "B0FJYHTC3X",
       "title": "Hello Kitty Island Adventure - PlayStation 5",
       "url": "https://www.amazon.com/Hello-Kitty-Island-Adventure-PlayStation-5/dp/B0FJYHTC3X/ref=sr_1_8",
@@ -179,10 +241,12 @@ h1 b{font-weight:800}
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Todos",
+      "brand": null
     },
     {
-      "position": 8,
+      "position": 9,
       "asin": "B0C7WQRCPB",
       "title": "MARVEL’S SPIDER-MAN 2 – PS5 Standard Edition",
       "url": "https://www.amazon.com/MARVELS-SPIDER-MAN-2-Standard-PlayStation-5/dp/B0C7WQRCPB/ref=sr_1_9",
@@ -197,10 +261,12 @@ h1 b{font-weight:800}
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Adolescentes",
+      "brand": "(1.5K)"
     },
     {
-      "position": 9,
+      "position": 10,
       "asin": "B0FH5GW64H",
       "title": "NBA 2K26 - PlayStation 5",
       "url": "https://www.amazon.com/NBA-2K26-PlayStation-5/dp/B0FH5GW64H/ref=sr_1_10",
@@ -215,10 +281,12 @@ h1 b{font-weight:800}
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Todos",
+      "brand": "(2.2K)"
     },
     {
-      "position": 10,
+      "position": 11,
       "asin": "B08FC64CNF",
       "title": "Sackboy: A Big Adventure – PlayStation 5",
       "url": "https://www.amazon.com/Sackboy-Big-Adventure-PlayStation-5/dp/B08FC64CNF/ref=sr_1_11",
@@ -233,10 +301,12 @@ h1 b{font-weight:800}
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Todos",
+      "brand": "(4K)"
     },
     {
-      "position": 11,
+      "position": 12,
       "asin": "B089X4XCLB",
       "title": "Marvel’s Spider-Man: Miles Morales – PlayStation 5",
       "url": "https://www.amazon.com/Marvels-Spider-Man-Miles-Morales-PlayStation-5/dp/B089X4XCLB/ref=sr_1_12",
@@ -249,12 +319,14 @@ h1 b{font-weight:800}
       "boughtPastMonth": "100+",
       "prime": true,
       "delivery": "FREE delivery Tomorrow, Aug 29",
-      "stock": "Only 12 left in stock - order soon.",
+      "stock": "Only 12 left in stock - order soon",
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Adolescentes",
+      "brand": "(4.8K)"
     },
     {
-      "position": 12,
+      "position": 13,
       "asin": "B09SW6GCGL",
       "title": "Gran Turismo 7 Standard Edition - PlayStation 5",
       "url": "https://www.amazon.com/Gran-Turismo-7-Standard-PlayStation-5/dp/B09SW6GCGL/ref=sr_1_13",
@@ -269,10 +341,12 @@ h1 b{font-weight:800}
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Todos",
+      "brand": "(2.2K)"
     },
     {
-      "position": 13,
+      "position": 14,
       "asin": "B0B3QWRQL8",
       "title": "The Last of Us Part I – PlayStation 5",
       "url": "https://www.amazon.com/Last-Us-Part-PlayStation-5/dp/B0B3QWRQL8/ref=sr_1_14",
@@ -287,10 +361,12 @@ h1 b{font-weight:800}
       "delivery": "FREE delivery Tomorrow, Aug 29",
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Maduro",
+      "brand": "(2.7K)"
     },
     {
-      "position": 14,
+      "position": 15,
       "asin": "B0FRSZT2H5",
       "title": "PlayStation®5 Digital Edition 825GB – Fortnite Flowering Chaos Bundle",
       "url": "https://www.amazon.com/PlayStation%C2%AE5-Digital-825GB-Flowering-PlayStation-5/dp/B0FRSZT2H5/ref=sr_1_15",
@@ -305,10 +381,12 @@ h1 b{font-weight:800}
       "delivery": null,
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Todos",
+      "brand": "(1K)"
     },
     {
-      "position": 15,
+      "position": 16,
       "asin": "B0CL61F39H",
       "title": "PlayStation 5 Disc Edition Console (slim)",
       "url": "https://www.amazon.com/PlayStation%C2%AE5-console-slim-PlayStation-5/dp/B0CL61F39H/ref=sr_1_16",
@@ -323,10 +401,12 @@ h1 b{font-weight:800}
       "delivery": null,
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": null,
+      "brand": "(5.6K)"
     },
     {
-      "position": 16,
+      "position": 17,
       "asin": "B0DJHF6Q9Z",
       "title": "PlayStation PS5 Console - Fortnite Cobalt Star Disc Edition",
       "url": "https://www.amazon.com/PS5-Console-Fortnite-Cobalt-PlayStation-5/dp/B0DJHF6Q9Z/ref=sr_1_17",
@@ -341,7 +421,9 @@ h1 b{font-weight:800}
       "delivery": null,
       "stock": null,
       "sponsored": false,
-      "badge": null
+      "badge": null,
+      "extra": "Calificación de la ESRB: Adolescentes",
+      "brand": "(1.2K)"
     }
   ],
   "coverage": {
@@ -353,7 +435,9 @@ h1 b{font-weight:800}
       "reviewCount",
       "price or MAP hint",
       "boughtPastMonth",
-      "delivery"
+      "delivery",
+      "ESRB/extra",
+      "sponsored"
     ],
     "lost": [
       "buy-box exact price on Overall Pick",
@@ -364,62 +448,77 @@ h1 b{font-weight:800}
     "organicCards": 16,
     "markdownBytes": 148621
   }
-}</script>
+}
+</script>
 <script>
 const $ = s => document.querySelector(s)
-const money = n => n==null?null:new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(n)
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))
 function stars(r){
   if(r==null) return ""
-  const full=Math.round(r)
-  return "★".repeat(full)+"☆".repeat(5-full)
+  const n=Math.round(r)
+  return "★".repeat(n)+"☆".repeat(5-n)
+}
+function money(n,label){
+  if(n==null) return {html: esc(label||"Ver precio"), hidden:true}
+  const [d,c]=n.toFixed(2).split(".")
+  return {html:`US$${esc(d)}<small>${esc(c)}</small>`, hidden:false}
+}
+function eta(s){
+  if(!s) return ""
+  let t=s.replace(/^FREE delivery\s*/i,"Entrega GRATIS ")
+         .replace(/^Get it\s*/i,"Recíbelo ")
+         .replace(/\bTomorrow\b/i,"mañana")
+         .replace(/\bWed\b/,"mié").replace(/\bThu\b/,"jue").replace(/\bFri\b/,"vie")
+         .replace(/\bMon\b/,"lun").replace(/\bTue\b/,"mar").replace(/\bSat\b/,"sáb").replace(/\bSun\b/,"dom")
+         .replace(/\bAug\b/,"ago").replace(/\bSep\b/,"sep")
+  return t
+}
+function card(it){
+  const p=money(it.price, it.mapHidden?"Ver precio":it.priceLabel)
+  const reviews=it.reviewCount!=null?` <span class="n">(${Number(it.reviewCount).toLocaleString("es")})</span>`:""
+  return `<article class="card">
+    <div class="media">
+      ${it.badge?`<span class="pick">${esc(it.badge)}</span>`:""}
+      <img src="${esc(it.image||"")}" alt=""/>
+      <button class="heart" type="button" aria-label="Guardar">♡</button>
+    </div>
+    <div class="info">
+      ${it.sponsored?`<div class="spon">Patrocinado</div>`:""}
+      <div class="title">${esc(it.title||"")}</div>
+      ${it.extra?`<div class="extra">${esc(it.extra)}</div>`:""}
+      <div class="rating"><span class="stars">${it.rating??""} ${stars(it.rating)}</span>${reviews}</div>
+      ${it.boughtPastMonth?`<div class="bought">${esc(it.boughtPastMonth)} comprados el mes pasado</div>`:""}
+      ${it.brand?`<div class="brand">${esc(it.brand)}</div>`:""}
+      <div class="price ${p.hidden?"hidden":""}">${p.html}</div>
+      ${it.prime?`<div class="prime">prime</div>`:""}
+      ${it.delivery?`<div class="eta">${esc(eta(it.delivery))}</div>`:""}
+      <a class="cart" href="${esc(it.url)}" target="_blank" rel="noopener">Agregar al carrito</a>
+    </div>
+  </article>`
 }
 function render(data, extra){
   const results=data.results||[]
-  $("#status").textContent = extra || (`Scraped ${data.sourceUrl||""}`)
-  $("#count").innerHTML = `${data.resultCountLabel||results.length+" results"} for <b>${data.query||""}</b>`
-  $("#list").innerHTML = results.map(it=>`
-    <a class="row" href="${it.url}" target="_blank" rel="noopener">
-      <img src="${it.image||""}" alt=""/>
-      <div class="body">
-        ${it.badge?`<div class="badge">${it.badge}</div>`:""}
-        <div class="title">${it.title||""}</div>
-        <div class="stars">${stars(it.rating)} ${it.rating??""} <span>(${(it.reviewCount||0).toLocaleString()})</span></div>
-        <div class="price ${it.mapHidden?"hidden":""}">${it.mapHidden?(it.priceLabel||"See price"): (money(it.price)||it.priceLabel||"—")}</div>
-        <div class="meta">
-          ${it.boughtPastMonth? it.boughtPastMonth+" bought in past month · ":""}
-          ${it.prime?'<span class="prime">Prime</span> ':""}
-          ${it.delivery||""}
-          ${it.stock? " · "+it.stock:""}
-        </div>
-      </div>
-    </a>`).join("")
-  const c=data.coverage||{}
-  $("#cov").innerHTML = `<b>${results.length} result cards</b> from ${(c.markdownBytes||0).toLocaleString()} bytes of Firecrawl markdown.
-    Extracted: ${(c.extracted||[]).join(", ")}.
-    Missing: ${(c.lost||[]).join(", ")}.`
+  if(data.shipTo) $("#ship").textContent=data.shipTo
+  $("#list").innerHTML=results.map(card).join("")
+  $("#status").textContent = extra || (`${results.length} resultados de “${data.query||"Play 5"}” · scrape Firecrawl, sin key en esta página.`)
 }
-async function loadSeed(){
-  try{
-    const r=await fetch("results.json",{cache:"no-store"})
-    if(r.ok) return r.json()
-  }catch(e){}
-  return JSON.parse($("#seed").textContent)
+function loadSeed(){
+  try{ return JSON.parse($("#seed").textContent) }catch(e){ return {results:[]} }
 }
 $("#f").addEventListener("submit", async ev=>{
   ev.preventDefault()
   const q=$("#q").value.trim()
   if(!q) return
-  $("#status").textContent="Searching…"
+  $("#status").textContent="Buscando…"
   try{
     const r=await fetch("/api/search",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({q})})
-    if(!r.ok) throw new Error(await r.text())
-    render(await r.json(), "Live SERP · “"+q+"”")
+    if(!r.ok) throw new Error("offline")
+    render(await r.json(), "Búsqueda en vivo · “"+q+"”")
   }catch(e){
-    const seed=await loadSeed()
-    render(seed, "Live search is not on this public host (API key stays off the page). Showing preloaded Play 5 results. ")
+    render(loadSeed(), "El buscador en vivo no está en Pages (la key no va al HTML). Lista precargada de Play 5.")
   }
 })
-loadSeed().then(d=>render(d)).catch(err=>{$("#list").innerHTML=`<p class="err">${err}</p>`})
+render(loadSeed())
 </script>
 </body>
 </html>
