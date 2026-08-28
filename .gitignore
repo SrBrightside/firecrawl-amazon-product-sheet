@@ -8,6 +8,4 @@ __pycache__/
 poc-live.png
 serp-desktop.png
 serp-mobile.png
-pyproject.toml
-uv.lock
 save_srv.py
