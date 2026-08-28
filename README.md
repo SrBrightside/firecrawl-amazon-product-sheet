@@ -4,6 +4,8 @@ A small demo that turns a [Firecrawl](https://www.firecrawl.dev) Amazon scrape i
 
 Firecrawl returns messy markdown (nav, warranties, “also viewed”, MAP price copy). This project parses that markdown into JSON and paints a sheet: title, ASIN, rating, listed vs hidden price, bullets, images, and a coverage panel of what made it out versus what did not.
 
+Live demo: https://srbrightside.github.io/firecrawl-amazon-product-sheet/
+
 The hosted page is static. It ships a preloaded scrape of the Amazon query **Play 5** (it resolved to a PlayStation 5 console, ASIN `B0FRGTYSL5`). You can open the page with no API key.
 
 This is not an Amazon product, not Amazon Business, and not a production crawler. Use it to see what Firecrawl actually returns.
