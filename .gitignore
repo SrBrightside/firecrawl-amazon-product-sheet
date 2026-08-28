@@ -9,3 +9,6 @@ poc-live.png
 serp-desktop.png
 serp-mobile.png
 save_srv.py
+.env*
+
+uv.lock
